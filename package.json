@@ -18,5 +18,10 @@
   "homepage": "https://github.com/Alfred021/Pokedex#readme",
   "dependencies": {
     "bootstrap": "^4.4.1"
+  },
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.1.0",
+    "eslint-plugin-import": "^2.20.2"
   }
 }
