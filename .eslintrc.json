@@ -14,5 +14,13 @@
         "ecmaVersion": 2018
     },
     "rules": {
+        "import/extensions": [
+            "error",
+            {
+              "js": "always",
+              "json": "sometimes",
+              "allowForLoopAfterthoughts": true
+            }
+          ]
     }
 }

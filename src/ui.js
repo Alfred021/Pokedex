@@ -1,8 +1,33 @@
 /* eslint-disable linebreak-style */
-function getPokemon(initialUrl) {
-  return fetch(initialUrl)
-    .then((resp) => resp.json())
-    .then((resp) => resp.results);
+import { getPokemonInfo } from './api.js';
+
+export function getListOfPokemon(pokemons) {
+  const $nav = document.querySelector('nav');
+  const $list = document.querySelector('#pokemon-list');
+  const $info = document.querySelector('#info-pokemon');
+
+  pokemons.forEach((pokemon) => {
+    const { name } = pokemon;
+    const { url } = pokemon;
+    const $item = document.createElement('a');
+    $item.textContent = name;
+    $item.href = '#';
+    $item.classList.add('list-group-item', 'list-group-item-action');
+    $item.addEventListener('click', () => {
+      $info.classList.remove('hidden');
+      const $activeItem = document.querySelector('.active');
+      if ($activeItem) {
+        $activeItem.classList.remove('active');
+      }
+      $item.classList.add('active');
+      $nav.classList.remove('hidden');
+      getPokemonInfo(url);
+    });
+
+    $list.appendChild($item);
+  });
+
+  return $list;
 }
 
 function showPokemonSkills(pokemon) {
@@ -52,8 +77,7 @@ function showPokemonType(pokemon) {
   });
 }
 
-
-function showPokemonInfo(pokemon) {
+export function showPokemonInfo(pokemon) {
   const $pokemonName = document.querySelector('#pokemon-name');
   const $pokemonImage = document.querySelector('#pokemon-image');
   const $pokemonweight = document.querySelector('#pokemon-weight');
@@ -71,84 +95,3 @@ function showPokemonInfo(pokemon) {
   showPokemonType(pokemon);
   showPokemonSkills(pokemon);
 }
-
-function getPokemonInfo(url) {
-  fetch(url)
-    .then((resp) => resp.json())
-    .then((showPokemonInfo(pokemon))
-}
-
-function listOfPokemon(pokemons) {
-  const $list = document.querySelector('#pokemon-list');
-  const $info = document.querySelector('#info-pokemon');
-
-  pokemons.forEach((pokemon) => {
-    const { name } = pokemon;
-    const { url } = pokemon;
-    const $item = document.createElement('a');
-    $item.textContent = name;
-    $item.href = '#';
-    $item.classList.add('list-group-item', 'list-group-item-action');
-    $item.addEventListener('click', () => {
-      $info.classList.remove('hidden');
-      const $activeItem = document.querySelector('.active');
-      if ($activeItem) {
-        $activeItem.classList.remove('active');
-      }
-      $item.classList.add('active');
-      getPokemonInfo(url);
-    });
-
-    $list.appendChild($item);
-  });
-
-  return $list;
-}
-
-function configureSearchBar() {
-  const $search = document.querySelector('#search');
-  $search.addEventListener('click', () => {
-    const pokemon = document.querySelector('input[type=search]').value.toLocaleLowerCase();
-    return showPokemonInfo(`https://pokeapi.co/api/v2/pokemon/${pokemon}`);
-  });
-  return undefined;
-}
-
-function setUp(offset) {
-  const limit = 500;
-
-  switchPages(offset);
-  const initialUrl = `https://pokeapi.co/api/v2/pokemon/?limit=${limit}&offset=${offset}`;
-  getPokemon(initialUrl)
-    .then((pokemons) => {
-      listOfPokemon(pokemons);
-    });
-}
-
-
-function switchPages(offset) {
-  const $next = document.querySelector('#next');
-  const $previous = document.querySelector('#previous');
-  const $list = document.querySelector('#pokemon-list');
-
-  $next.addEventListener('click', () => {
-    let offset = 0;
-    if (offset >= 0 || offset >= 500) {
-      offset += 500;
-      $list.innerHTML = '';
-      return setUp(offset);
-    }
-  });
-
-  $previous.addEventListener('click', () => {
-    if (offset !== 0 || offset <= 500) {
-      offset -= 500;
-      $list.innerHTML = '';
-      return setUp(offset);
-    }
-  });
-  return offset;
-}
-
-configureSearchBar();
-setUp();
