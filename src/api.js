@@ -3,29 +3,25 @@ import {
   showPokemonInfo,
   getListOfPokemon,
 } from './ui.js';
+import {
+  updateButtons,
+} from './pagination.js';
 
 export async function getPokemonList(url) {
-  const mainUrl = url;
-  const apiResp = await fetch(mainUrl);
+  const apiResp = await fetch(url);
   const apiRespJson = await apiResp.json();
   return apiRespJson;
 }
 
 export async function getPokemon(url) {
-  const mainUrl = url;
-  const apiResp = await fetch(mainUrl);
+  const apiResp = await fetch(url);
   const apiRespJson = await apiResp.json();
   return apiRespJson.results;
 }
 
-async function updateButtons(list) {
-  let next = list.next;
-  let previous = list.previous;
-}
-
 export async function updatePokemonList(url) {
   const newPokemonResults = await getPokemon(url);
-  const newPokemonList = getPokemonList(url);
+  const newPokemonList = await getPokemonList(url);
   updateButtons(newPokemonList);
   getListOfPokemon(newPokemonResults);
 }

@@ -1,5 +1,7 @@
 /* eslint-disable linebreak-style */
-import switchPages from './pagination.js';
+import {
+  switchPages,
+} from './pagination.js';
 import {
   getPokemon,
   configureSearchBar,

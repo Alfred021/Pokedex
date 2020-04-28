@@ -1,28 +1,36 @@
 /* eslint-disable linebreak-style */
 import { updatePokemonList } from './api.js';
 
-export default function switchPages(list) {
-  const nextUrl = list.next;
-  const previousUrl = list.previous;
+let next;
+let previous;
+
+export function updateButtons(list) {
+  next = list.next;
+  previous = list.previous;
+}
+
+export function switchPages(list) {
+  next = list.next;
+  previous = list.previous;
   const $next = document.querySelector('#next');
   const $previous = document.querySelector('#previous');
   const $list = document.querySelector('#pokemon-list');
 
   $next.addEventListener('click', () => {
-    if (nextUrl === null) {
+    if (next === null) {
       return;
     }
     $list.innerHTML = '';
-    console.log(nextUrl);
-    updatePokemonList(nextUrl);
+    console.log(next);
+    updatePokemonList(next);
   });
 
   $previous.addEventListener('click', () => {
-    if (previousUrl === null) {
+    if (previous === null) {
       return;
     }
     $list.innerHTML = '';
-    console.log(previousUrl);
-    updatePokemonList(previousUrl);
+    console.log(previous);
+    updatePokemonList(previous);
   });
 }
