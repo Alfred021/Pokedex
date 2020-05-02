@@ -6,6 +6,7 @@ import {
 import {
   updateButtons,
 } from './pagination.js';
+import { getPokemonsInfo } from './service.js';
 
 export async function getPokemonList(url) {
   const apiResp = await fetch(url);
@@ -27,18 +28,17 @@ export async function updatePokemonList(url) {
 }
 
 export async function getPokemonInfo(url) {
-  const pokemonUrl = url;
-  const apiResp = await fetch(pokemonUrl);
+  const apiResp = await fetch(url);
   const apiRespJson = await apiResp.json();
   const pokemon = apiRespJson;
   return showPokemonInfo(pokemon);
 }
 
-export function configureSearchBar() {
+export async function configureSearchBar() {
   const $search = document.querySelector('#search');
   $search.addEventListener('click', () => {
     const pokemon = document.querySelector('input[type=search]').value.toLocaleLowerCase();
-    return getPokemonInfo(`https://pokeapi.co/api/v2/pokemon/${pokemon}`);
+    return getPokemonsInfo(`https://pokeapi.co/api/v2/pokemon/${pokemon}`);
   });
   return undefined;
 }

@@ -1,5 +1,5 @@
 /* eslint-disable linebreak-style */
-import { getPokemonInfo } from './api.js';
+import { getPokemonsInfo } from './service.js';
 
 export function getListOfPokemon(pokemons) {
   const $nav = document.querySelector('nav');
@@ -21,7 +21,7 @@ export function getListOfPokemon(pokemons) {
       }
       $item.classList.add('active');
       $nav.classList.remove('hidden');
-      getPokemonInfo(url);
+      getPokemonsInfo(url);
     });
 
     $list.appendChild($item);
