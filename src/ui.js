@@ -1,5 +1,6 @@
 /* eslint-disable linebreak-style */
 import { getPokemonsInfo } from './service.js';
+import { getPokemonInfo } from './api.js';
 
 export function getListOfPokemon(pokemons) {
   const $nav = document.querySelector('nav');
@@ -22,6 +23,7 @@ export function getListOfPokemon(pokemons) {
       $item.classList.add('active');
       $nav.classList.remove('hidden');
       getPokemonsInfo(url);
+      getPokemonInfo(url);
     });
 
     $list.appendChild($item);
@@ -83,11 +85,12 @@ export function showPokemonInfo(pokemon) {
   const $pokemonweight = document.querySelector('#pokemon-weight');
   const $pokemonheight = document.querySelector('#pokemon-height');
   const { name } = pokemon;
+  const { id } = pokemon;
   const { weight } = pokemon;
   const { height } = pokemon;
   const image = pokemon.sprites.front_default;
 
-  $pokemonName.textContent = name;
+  $pokemonName.textContent = `No.${id} ${name.toUpperCase()}`;
   $pokemonImage.setAttribute('src', image);
   $pokemonweight.textContent = `Weight: ${weight / 10}kg`;
   $pokemonheight.textContent = `Height: ${height / 10}m`;

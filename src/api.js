@@ -38,7 +38,8 @@ export async function configureSearchBar() {
   const $search = document.querySelector('#search');
   $search.addEventListener('click', () => {
     const pokemon = document.querySelector('input[type=search]').value.toLocaleLowerCase();
-    return getPokemonsInfo(`https://pokeapi.co/api/v2/pokemon/${pokemon}`);
+    getPokemonsInfo(`https://pokeapi.co/api/v2/pokemon/${pokemon}`);
+    getPokemonInfo(`https://pokeapi.co/api/v2/pokemon/${pokemon}`);
   });
   return undefined;
 }

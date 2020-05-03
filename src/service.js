@@ -7,8 +7,8 @@ import {
 } from './storage.js';
 
 import {
-  updatePokemonList,
-  getPokemonInfo,
+  getPokemon,
+  getPokemonList as getPokemonInfo,
 } from './api.js';
 
 export async function getPokemonsFromList(url) {
@@ -16,8 +16,9 @@ export async function getPokemonsFromList(url) {
     const pokemonList = getPokemonListFromStorage(url);
     return pokemonList;
   } catch (e) {
-    const pokemonList = await updatePokemonList(url);
+    const pokemonList = await getPokemon(url);
     savePokemonListOnStorage(pokemonList);
+    console.log(pokemonList);
     return pokemonList;
   }
 }
@@ -29,6 +30,7 @@ export async function getPokemonsInfo(url) {
   } catch (e) {
     const pokemonInfo = await getPokemonInfo(url);
     savePokemonInfoOnStorage(pokemonInfo);
+    console.log(pokemonInfo);
     return pokemonInfo;
   }
 }

@@ -1,4 +1,5 @@
 /* eslint-disable linebreak-style */
+import { updatePokemonList } from './api.js';
 import { getPokemonsFromList } from './service.js';
 
 let next;
@@ -22,6 +23,7 @@ export function switchPages(list) {
     }
     $list.innerHTML = '';
     console.log(next);
+    updatePokemonList(next);
     getPokemonsFromList(next);
   });
 
@@ -31,6 +33,7 @@ export function switchPages(list) {
     }
     $list.innerHTML = '';
     console.log(previous);
+    updatePokemonList(previous);
     getPokemonsFromList(previous);
   });
 }
