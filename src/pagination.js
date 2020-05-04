@@ -1,5 +1,7 @@
 /* eslint-disable linebreak-style */
-import { updatePokemonList } from './api.js';
+import {
+  updatePokemonList,
+} from './api.js';
 import { getPokemonsFromList } from './service.js';
 
 let next;
@@ -30,6 +32,11 @@ export function switchPages(list) {
   $previous.addEventListener('click', () => {
     if (previous === null) {
       return;
+    }
+    if (next === null) {
+      previous = 'https://pokeapi.co/api/v2/pokemon/?offset=940&limit=20';
+      updatePokemonList(previous);
+      getPokemonsFromList(previous);
     }
     $list.innerHTML = '';
     console.log(previous);

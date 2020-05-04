@@ -13,8 +13,7 @@ import {
 
 export async function getPokemonsFromList(url) {
   try {
-    const pokemonList = getPokemonListFromStorage(url);
-    return pokemonList;
+    return getPokemonListFromStorage(url);
   } catch (e) {
     const pokemonList = await getPokemon(url);
     savePokemonListOnStorage(pokemonList);
@@ -23,14 +22,13 @@ export async function getPokemonsFromList(url) {
   }
 }
 
-export async function getPokemonsInfo(url) {
+export async function getPokemonsInfo(name) {
   try {
-    const pokemonInfo = getPokemonInfoFromStorage(url);
-    return pokemonInfo;
+    const pokemon = getPokemonInfoFromStorage(name);
+    return pokemon;
   } catch (e) {
-    const pokemonInfo = await getPokemonInfo(url);
-    savePokemonInfoOnStorage(pokemonInfo);
-    console.log(pokemonInfo);
-    return pokemonInfo;
+    const pokemon = await getPokemonInfo(name);
+    savePokemonInfoOnStorage(pokemon);
+    return pokemon;
   }
 }
