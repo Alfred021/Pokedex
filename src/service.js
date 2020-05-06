@@ -5,30 +5,46 @@ import {
   savePokemonListOnStorage,
   savePokemonInfoOnStorage,
 } from './storage.js';
-
 import {
-  getPokemon,
-  getPokemonList as getPokemonInfo,
+  getPokemonFromApi,
+  getPokemonList,
 } from './api.js';
+import {
+  showPokemonInfo,
+  getListOfPokemon,
+} from './ui.js';
+import { updateButtons } from './pagination.js';
 
-export async function getPokemonsFromList(url) {
+async function getPokemonsFromList(url) {
   try {
     return getPokemonListFromStorage(url);
   } catch (e) {
-    const pokemonList = await getPokemon(url);
-    savePokemonListOnStorage(pokemonList);
-    console.log(pokemonList);
-    return pokemonList;
+    const pokemonList = await getPokemonList(url);
+    const pokemonListResults = pokemonList.results;
+    savePokemonListOnStorage(url, pokemonListResults);
+    return pokemonListResults;
   }
 }
 
-export async function getPokemonsInfo(name) {
+async function getPokemonsInfo(name) {
   try {
     const pokemon = getPokemonInfoFromStorage(name);
     return pokemon;
   } catch (e) {
-    const pokemon = await getPokemonInfo(name);
-    savePokemonInfoOnStorage(pokemon);
-    return pokemon;
+    const pokemonInfo = await getPokemonFromApi(name);
+    savePokemonInfoOnStorage(pokemonInfo);
+    return pokemonInfo;
   }
+}
+
+export async function showPokemonInfoFromService(name) {
+  const pokemon = await getPokemonsInfo(name);
+  showPokemonInfo(pokemon);
+}
+
+export async function updatePokemonList(url) {
+  const newPokemonResults = await getPokemonsFromList(url);
+  const newPokemonUrl = await getPokemonList(url);
+  updateButtons(newPokemonUrl);
+  getListOfPokemon(newPokemonResults);
 }

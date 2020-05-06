@@ -1,20 +1,17 @@
 /* eslint-disable linebreak-style */
-import {
-  updatePokemonList,
-} from './api.js';
-import { getPokemonsFromList } from './service.js';
+import { updatePokemonList } from './service.js';
 
 let next;
 let previous;
 
-export function updateButtons(list) {
-  next = list.next;
-  previous = list.previous;
+export function updateButtons(url) {
+  next = url.next;
+  previous = url.previous;
 }
 
-export function switchPages(list) {
-  next = list.next;
-  previous = list.previous;
+export function switchPages(url) {
+  next = url.next;
+  previous = url.previous;
   const $next = document.querySelector('#next');
   const $previous = document.querySelector('#previous');
   const $list = document.querySelector('#pokemon-list');
@@ -24,9 +21,7 @@ export function switchPages(list) {
       return;
     }
     $list.innerHTML = '';
-    console.log(next);
     updatePokemonList(next);
-    getPokemonsFromList(next);
   });
 
   $previous.addEventListener('click', () => {
@@ -36,11 +31,8 @@ export function switchPages(list) {
     if (next === null) {
       previous = 'https://pokeapi.co/api/v2/pokemon/?offset=940&limit=20';
       updatePokemonList(previous);
-      getPokemonsFromList(previous);
     }
     $list.innerHTML = '';
-    console.log(previous);
     updatePokemonList(previous);
-    getPokemonsFromList(previous);
   });
 }

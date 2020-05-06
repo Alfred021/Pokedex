@@ -3,7 +3,6 @@ import {
   switchPages,
 } from './pagination.js';
 import {
-  getPokemon,
   configureSearchBar,
   getPokemonList,
 } from './api.js';
@@ -16,10 +15,10 @@ async function setUp() {
   $nav.classList.add('hidden');
 
   const url = 'https://pokeapi.co/api/v2/pokemon/';
-  const pokemons = await getPokemon(url);
-  const list = await getPokemonList(url);
-  getListOfPokemon(pokemons);
-  switchPages(list);
+  const pokemons = await getPokemonList(url);
+  const pokemonResults = pokemons.results;
+  getListOfPokemon(pokemonResults);
+  switchPages(pokemons);
 }
 configureSearchBar();
 setUp();

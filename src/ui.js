@@ -1,6 +1,5 @@
 /* eslint-disable linebreak-style */
-import { getPokemonsInfo } from './service.js';
-import { getPokemonInfo } from './api.js';
+import { showPokemonInfoFromService } from './service.js';
 
 export function getListOfPokemon(pokemons) {
   const $nav = document.querySelector('nav');
@@ -9,7 +8,6 @@ export function getListOfPokemon(pokemons) {
 
   pokemons.forEach((pokemon) => {
     const { name } = pokemon;
-    const { url } = pokemon;
     const $item = document.createElement('a');
     $item.textContent = name;
     $item.href = '#';
@@ -22,8 +20,7 @@ export function getListOfPokemon(pokemons) {
       }
       $item.classList.add('active');
       $nav.classList.remove('hidden');
-      getPokemonsInfo(url);
-      getPokemonInfo(url);
+      showPokemonInfoFromService(name);
     });
 
     $list.appendChild($item);
@@ -38,31 +35,10 @@ function showPokemonSkills(pokemon) {
   const pokeSkills = pokemon.abilities;
 
   pokeSkills.forEach((skill) => {
-    const { url } = skill.ability;
     const { name } = skill.ability;
-    fetch(url)
-      .then((resp) => resp.json())
-      .then((resp) => {
-        const skillsTexts = resp.flavor_text_entries;
-
-        for (let i = 0; i < skillsTexts.length; i += 1) {
-          if (skillsTexts[i].language.name === 'en') {
-            const skillDescriptionText = skillsTexts[i].flavor_text;
-            const $skillListPokemon = document.createElement('li');
-            $skillListPokemon.classList.add('list-group-item');
-            const $skillName = document.createElement('p');
-            $skillName.textContent = `${name}:`;
-            $skillListPokemon.appendChild($skillName);
-
-            const $skillDescripcion = document.createElement('p');
-            $skillDescripcion.textContent = skillDescriptionText;
-            $skillName.appendChild($skillDescripcion);
-
-            $skillList.appendChild($skillListPokemon);
-            break;
-          }
-        }
-      });
+    const $skillListPokemon = document.createElement('li');
+    $skillListPokemon.textContent = `${name}`;
+    $skillList.appendChild($skillListPokemon);
   });
 }
 
@@ -76,6 +52,19 @@ function showPokemonType(pokemon) {
     const $item = document.createElement('li');
     $item.textContent = typeName;
     $pokemonType.appendChild($item);
+  });
+}
+
+function showPokemonStats(pokemon) {
+  const $statsList = document.querySelector('#stats-List');
+  $statsList.innerHTML = '';
+  const pokemonStats = pokemon.stats;
+  pokemonStats.forEach((stat) => {
+    const baseStat = stat.base_stat;
+    const statName = stat.stat.name;
+    const $item = document.createElement('li');
+    $item.textContent = `${statName}: ${baseStat}`;
+    $statsList.appendChild($item);
   });
 }
 
@@ -97,4 +86,5 @@ export function showPokemonInfo(pokemon) {
 
   showPokemonType(pokemon);
   showPokemonSkills(pokemon);
+  showPokemonStats(pokemon);
 }
