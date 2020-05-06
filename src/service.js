@@ -13,12 +13,13 @@ import {
   showPokemonInfo,
   getListOfPokemon,
 } from './ui.js';
-import { updateButtons } from './pagination.js';
 
 async function getPokemonsFromList(url) {
   try {
-    return getPokemonListFromStorage(url);
+    const pokemonList = getPokemonListFromStorage(url);
+    return pokemonList;
   } catch (e) {
+    console.log(e);
     const pokemonList = await getPokemonList(url);
     const pokemonListResults = pokemonList.results;
     savePokemonListOnStorage(url, pokemonListResults);
@@ -42,9 +43,7 @@ export async function showPokemonInfoFromService(name) {
   showPokemonInfo(pokemon);
 }
 
-export async function updatePokemonList(url) {
-  const newPokemonResults = await getPokemonsFromList(url);
-  const newPokemonUrl = await getPokemonList(url);
-  updateButtons(newPokemonUrl);
-  getListOfPokemon(newPokemonResults);
+export async function updatePokemonListFromService(url) {
+  const newPokemon = await getPokemonsFromList(url);
+  getListOfPokemon(newPokemon);
 }

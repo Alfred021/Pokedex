@@ -4,7 +4,7 @@ import {
 } from './ui.js';
 import { showPokemonInfoFromService } from './service.js';
 
-export async function getPokemonList(url) {
+export async function getPokemonList(url = 'https://pokeapi.co/api/v2/pokemon/') {
   const apiResp = await fetch(url);
   const apiRespJson = await apiResp.json();
   return apiRespJson;

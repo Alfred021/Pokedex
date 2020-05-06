@@ -1,5 +1,4 @@
 /* eslint-disable linebreak-style */
-import { updatePokemonList } from './service.js';
 
 let next;
 let previous;
@@ -9,30 +8,28 @@ export function updateButtons(url) {
   previous = url.previous;
 }
 
-export function switchPages(url) {
-  next = url.next;
-  previous = url.previous;
+export function switchPages(funtion) {
   const $next = document.querySelector('#next');
   const $previous = document.querySelector('#previous');
   const $list = document.querySelector('#pokemon-list');
 
-  $next.addEventListener('click', () => {
+  $next.addEventListener('click', async () => {
     if (next === null) {
       return;
     }
     $list.innerHTML = '';
-    updatePokemonList(next);
+    funtion(next);
   });
 
-  $previous.addEventListener('click', () => {
+  $previous.addEventListener('click', async () => {
     if (previous === null) {
       return;
     }
     if (next === null) {
       previous = 'https://pokeapi.co/api/v2/pokemon/?offset=940&limit=20';
-      updatePokemonList(previous);
+      funtion(previous);
     }
     $list.innerHTML = '';
-    updatePokemonList(previous);
+    funtion(previous);
   });
 }
