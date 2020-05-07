@@ -88,3 +88,12 @@ export function showPokemonInfo(pokemon) {
   showPokemonSkills(pokemon);
   showPokemonStats(pokemon);
 }
+
+export async function configureSearchBar() {
+  const $search = document.querySelector('#search');
+  $search.addEventListener('click', () => {
+    const pokemon = document.querySelector('input[type=search]').value.toLocaleLowerCase();
+    showPokemonInfoFromService(pokemon);
+  });
+  return undefined;
+}

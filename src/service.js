@@ -11,19 +11,16 @@ import {
 } from './api.js';
 import {
   showPokemonInfo,
-  getListOfPokemon,
 } from './ui.js';
 
-async function getPokemonsFromList(url) {
+export async function getPokemonsFromList(url) {
   try {
     const pokemonList = getPokemonListFromStorage(url);
     return pokemonList;
   } catch (e) {
-    console.log(e);
     const pokemonList = await getPokemonList(url);
-    const pokemonListResults = pokemonList.results;
-    savePokemonListOnStorage(url, pokemonListResults);
-    return pokemonListResults;
+    savePokemonListOnStorage(url, pokemonList);
+    return pokemonList;
   }
 }
 
@@ -41,9 +38,4 @@ async function getPokemonsInfo(name) {
 export async function showPokemonInfoFromService(name) {
   const pokemon = await getPokemonsInfo(name);
   showPokemonInfo(pokemon);
-}
-
-export async function updatePokemonListFromService(url) {
-  const newPokemon = await getPokemonsFromList(url);
-  getListOfPokemon(newPokemon);
 }

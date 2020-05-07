@@ -1,10 +1,10 @@
 /* eslint-disable linebreak-style */
-export function savePokemonListOnStorage(url, pokemonList) {
+export function savePokemonListOnStorage(url, pokemon) {
   try {
-    localStorage.setItem(url, JSON.stringify(pokemonList));
+    localStorage.setItem(url, JSON.stringify(pokemon));
   } catch (e) {
     localStorage.clear();
-    localStorage.setItem(url, JSON.stringify(pokemonList));
+    localStorage.setItem(url, JSON.stringify(pokemon));
   }
 }
 

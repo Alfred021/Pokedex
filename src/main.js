@@ -1,30 +1,25 @@
 /* eslint-disable linebreak-style */
 import {
   switchPages,
-  updateButtons,
 } from './pagination.js';
 import {
-  configureSearchBar,
-  getPokemonList,
-} from './api.js';
-import {
   getListOfPokemon,
+  configureSearchBar,
 } from './ui.js';
-import { updatePokemonListFromService } from './service.js';
-
-async function updatePokemonList(url) {
-  updateButtons(await getPokemonList(url));
-  updatePokemonListFromService(url);
-}
+import {
+  getPokemonsFromList,
+} from './service.js';
 
 async function setUp(url) {
   const $nav = document.querySelector('nav');
   $nav.classList.add('hidden');
 
-  const pokemons = await getPokemonList(url);
-  const pokemonResults = pokemons.results;
-  getListOfPokemon(pokemonResults);
-  switchPages(updatePokemonList);
+  const pokemonList = await getPokemonsFromList(url);
+  const nextUrl = pokemonList.next;
+  const previousUrl = pokemonList.previous;
+  const pokemonListResults = pokemonList.results;
+  getListOfPokemon(pokemonListResults);
+  switchPages(nextUrl, previousUrl, setUp);
 }
 configureSearchBar();
 setUp();

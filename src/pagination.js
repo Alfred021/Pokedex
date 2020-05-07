@@ -1,35 +1,27 @@
 /* eslint-disable linebreak-style */
 
-let next;
-let previous;
-
-export function updateButtons(url) {
-  next = url.next;
-  previous = url.previous;
-}
-
-export function switchPages(funtion) {
+export function switchPages(nextUrl, previousUrl, callback) {
   const $next = document.querySelector('#next');
   const $previous = document.querySelector('#previous');
   const $list = document.querySelector('#pokemon-list');
 
-  $next.addEventListener('click', async () => {
-    if (next === null) {
+  $next.addEventListener('click', () => {
+    if (nextUrl.next === null) {
       return;
     }
     $list.innerHTML = '';
-    funtion(next);
+    callback(nextUrl);
   });
 
-  $previous.addEventListener('click', async () => {
-    if (previous === null) {
+  $previous.addEventListener('click', () => {
+    if (previousUrl === null) {
       return;
     }
     if (next === null) {
-      previous = 'https://pokeapi.co/api/v2/pokemon/?offset=940&limit=20';
-      funtion(previous);
+      previousUrl = 'https://pokeapi.co/api/v2/pokemon/?offset=940&limit=20';
+      callback(previousUrl);
     }
     $list.innerHTML = '';
-    funtion(previous);
+    callback(previousUrl);
   });
 }
