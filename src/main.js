@@ -1,7 +1,5 @@
 /* eslint-disable linebreak-style */
-import {
-  switchPages,
-} from './pagination.js';
+import switchPages from './pagination.js';
 import {
   getListOfPokemon,
   configureSearchBar,
@@ -10,7 +8,7 @@ import {
   getPokemonsFromList,
 } from './service.js';
 
-async function setUp(url) {
+export default async function setUp(url) {
   const $nav = document.querySelector('nav');
   $nav.classList.add('hidden');
 
@@ -22,4 +20,3 @@ async function setUp(url) {
   switchPages(nextUrl, previousUrl, setUp);
 }
 configureSearchBar();
-setUp();

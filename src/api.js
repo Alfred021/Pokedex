@@ -1,6 +1,6 @@
 /* eslint-disable linebreak-style */
 
-export async function getPokemonList(url = 'https://pokeapi.co/api/v2/pokemon?offset=0&limit=20') {
+export async function getPokemonList(url = 'https://pokeapi.co/api/v2/pokemon/') {
   const apiResp = await fetch(url);
   const apiRespJson = await apiResp.json();
   return apiRespJson;

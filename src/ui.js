@@ -91,9 +91,9 @@ export function showPokemonInfo(pokemon) {
 
 export async function configureSearchBar() {
   const $search = document.querySelector('#search');
-  $search.addEventListener('click', () => {
+  $search.onclick = () => {
     const pokemon = document.querySelector('input[type=search]').value.toLocaleLowerCase();
     showPokemonInfoFromService(pokemon);
-  });
+  };
   return undefined;
 }
