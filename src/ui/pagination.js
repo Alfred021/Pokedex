@@ -20,7 +20,6 @@ export default function switchPages(nextUrl, previousUrl, callback) {
       callback(previousUrl = 'https://pokeapi.co/api/v2/pokemon/?offset=940&limit=20');
     }
     $list.innerHTML = '';
-    console.log(previousUrl);
     callback(previousUrl);
   };
 }

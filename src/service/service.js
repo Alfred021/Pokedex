@@ -4,14 +4,11 @@ import {
   getPokemonListFromStorage,
   savePokemonListOnStorage,
   savePokemonInfoOnStorage,
-} from './storage.js';
+} from '../storage/storage.js';
 import {
   getPokemonFromApi,
   getPokemonList,
-} from './api.js';
-import {
-  showPokemonInfo,
-} from './ui.js';
+} from '../api/api.js';
 
 export async function getPokemonsFromList(url) {
   try {
@@ -24,7 +21,7 @@ export async function getPokemonsFromList(url) {
   }
 }
 
-async function getPokemonsInfo(name) {
+export async function getPokemonsInfo(name) {
   try {
     const pokemon = getPokemonInfoFromStorage(name);
     return pokemon;
@@ -33,9 +30,4 @@ async function getPokemonsInfo(name) {
     savePokemonInfoOnStorage(pokemonInfo);
     return pokemonInfo;
   }
-}
-
-export async function showPokemonInfoFromService(name) {
-  const pokemon = await getPokemonsInfo(name);
-  showPokemonInfo(pokemon);
 }

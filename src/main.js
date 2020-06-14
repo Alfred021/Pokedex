@@ -1,12 +1,12 @@
 /* eslint-disable linebreak-style */
-import switchPages from './pagination.js';
+import switchPages from './ui/pagination.js';
 import {
   getListOfPokemon,
   configureSearchBar,
-} from './ui.js';
+} from './ui/ui.js';
 import {
   getPokemonsFromList,
-} from './service.js';
+} from './service/service.js';
 
 export default async function setUp(url) {
   const $nav = document.querySelector('nav');
