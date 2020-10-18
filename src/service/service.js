@@ -9,11 +9,11 @@ import {
   getPokemonFromApi,
   getPokemonList,
 } from '../api/api.js';
+import mapPokemon from '../mappers/pokedex.js';
 
 export async function getPokemonsFromList(url) {
   try {
-    const pokemonList = getPokemonListFromStorage(url);
-    return pokemonList;
+    return getPokemonListFromStorage(url);
   } catch (e) {
     const pokemonList = await getPokemonList(url);
     savePokemonListOnStorage(url, pokemonList);
@@ -21,13 +21,14 @@ export async function getPokemonsFromList(url) {
   }
 }
 
-export async function getPokemonsInfo(name) {
+export async function getPokemon(name) {
+  let pokemon;
   try {
-    const pokemon = getPokemonInfoFromStorage(name);
-    return pokemon;
+    pokemon = getPokemonInfoFromStorage(name);
   } catch (e) {
     const pokemonInfo = await getPokemonFromApi(name);
-    savePokemonInfoOnStorage(pokemonInfo);
-    return pokemonInfo;
+    pokemon = mapPokemon(pokemonInfo);
+    savePokemonInfoOnStorage(pokemon);
   }
+  return pokemon;
 }

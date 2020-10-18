@@ -10,7 +10,8 @@
 - Eslint, para analisis, estilos y reglas del codigo.
 - NPM para dependencias, abrir la terminal y ejecutar 'npm install'.
 - Babel para traspilar codigo.
-- Jest (Para los Tests).
+- Jest (Para Unit Tests).
+- Cypress para End to End Testing.
 
 ## Dependencias a instalar: 
 

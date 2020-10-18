@@ -1,66 +1,67 @@
-/* eslint-disable linebreak-style */
-import { getPokemonsInfo } from '../service/service.js';
-import pokemonGeneralInfo from '../class.js';
+import { getPokemon } from '../service/service.js';
 
-function showPokemonSkills(pokemonInfo) {
+function showPokemonSkills(skills) {
   const $skillList = document.querySelector('#skill-list');
   $skillList.innerHTML = '';
-  const pokeSkills = pokemonInfo.skills;
 
-  pokeSkills.forEach((skill) => {
-    const { name } = skill.ability;
+  skills.forEach((skill) => {
     const $skillListPokemon = document.createElement('li');
-    $skillListPokemon.textContent = `${name}`;
+    $skillListPokemon.textContent = `${skill}`;
     $skillList.appendChild($skillListPokemon);
   });
 }
 
-function showPokemonType(pokemonInfo) {
+function showPokemonType(types) {
   const $pokemonType = document.querySelector('#pokemon-type');
   $pokemonType.innerHTML = '';
-  const pokemonTypes = pokemonInfo.types;
 
-  pokemonTypes.forEach((type) => {
-    const typeName = type.type.name;
+  types.forEach((type) => {
     const $item = document.createElement('li');
-    $item.textContent = typeName;
+    $item.textContent = type;
     $pokemonType.appendChild($item);
   });
 }
 
-function showPokemonStats(pokemonInfo) {
+function showPokemonStats(stats) {
   const $statsList = document.querySelector('#stats-List');
   $statsList.innerHTML = '';
-  const pokemonStats = pokemonInfo.stats;
 
-  pokemonStats.forEach((stat) => {
-    const baseStat = stat.base_stat;
-    const statName = stat.stat.name;
+  stats.forEach((stat) => {
+    const { name, stat: statData } = stat;
     const $item = document.createElement('li');
-    $item.textContent = `${statName}: ${baseStat}`;
+    $item.textContent = `${name}: ${statData}`;
     $statsList.appendChild($item);
   });
 }
 
 export function showPokemonInfo(pokemon) {
+  const {
+    id,
+    name,
+    weight,
+    height,
+    image,
+    types,
+    skills,
+    stats,
+  } = pokemon;
+
   const $pokemonName = document.querySelector('#pokemon-name');
   const $pokemonImage = document.querySelector('#pokemon-image');
   const $pokemonweight = document.querySelector('#pokemon-weight');
   const $pokemonheight = document.querySelector('#pokemon-height');
-  const pokemonInfo = new pokemonGeneralInfo(pokemon);
 
-  $pokemonName.textContent = `No.${pokemonInfo.id} ${pokemonInfo.name.toUpperCase()}`;
-  $pokemonImage.setAttribute('src', pokemonInfo.image);
-  $pokemonweight.textContent = `Weight: ${pokemonInfo.weight / 10}kg`;
-  $pokemonheight.textContent = `Height: ${pokemonInfo.height / 10}m`;
+  $pokemonName.textContent = `No.${id} ${name.toUpperCase()}`;
+  $pokemonImage.setAttribute('src', image);
+  $pokemonweight.textContent = `Weight: ${weight / 10}kg`;
+  $pokemonheight.textContent = `Height: ${height / 10}m`;
 
-  showPokemonType(pokemonInfo);
-  showPokemonSkills(pokemonInfo);
-  showPokemonStats(pokemonInfo);
+  showPokemonType(types);
+  showPokemonSkills(skills);
+  showPokemonStats(stats);
 }
 
 export async function getListOfPokemon(pokemons) {
-  const $nav = document.querySelector('nav');
   const $list = document.querySelector('#pokemon-list');
   const $info = document.querySelector('#info-pokemon');
 
@@ -77,8 +78,7 @@ export async function getListOfPokemon(pokemons) {
         $activeItem.classList.remove('active');
       }
       $item.classList.add('active');
-      $nav.classList.remove('hidden');
-      const pokemonInfo = await getPokemonsInfo(name);
+      const pokemonInfo = await getPokemon(name);
       showPokemonInfo(pokemonInfo);
     });
 
@@ -88,12 +88,24 @@ export async function getListOfPokemon(pokemons) {
   return $list;
 }
 
+async function searchPokemonFromUserInput() {
+  const $info = document.querySelector('#info-pokemon');
+  $info.classList.remove('hidden');
+  const pokemon = document.querySelector('input').value.toLocaleLowerCase();
+  const pokemonInfo = await getPokemon(pokemon);
+  showPokemonInfo(pokemonInfo);
+}
+
 export async function configureSearchBar() {
   const $search = document.querySelector('#search');
+  const $input = document.querySelector('input');
   $search.onclick = async () => {
-    const pokemon = document.querySelector('input[type=search]').value.toLocaleLowerCase();
-    const pokemonInfo = await getPokemonsInfo(pokemon);
-    showPokemonInfo(pokemonInfo);
+    searchPokemonFromUserInput();
   };
-  return undefined;
+  $input.addEventListener('keydown', (event) => {
+    if (event.code === 'Enter') {
+      searchPokemonFromUserInput();
+      event.preventDefault();
+    }
+  });
 }

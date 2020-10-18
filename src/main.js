@@ -9,9 +9,6 @@ import {
 } from './service/service.js';
 
 export default async function setUp(url) {
-  const $nav = document.querySelector('nav');
-  $nav.classList.add('hidden');
-
   const pokemonList = await getPokemonsFromList(url);
   const nextUrl = pokemonList.next;
   const previousUrl = pokemonList.previous;
