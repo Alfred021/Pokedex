@@ -1,0 +1,41 @@
+{
+  "name": "pokedex",
+  "version": "1.0.0",
+  "description": "Pokedex",
+  "main": "index.html",
+  "scripts": {
+    "test": "jest",
+    "test-cypress": "run-p start-server cypress:open",
+    "start-server": "http-server",
+    "cypress:open": "cypress open"
+    },
+  "jest": {
+    "transform": {
+      "^.+\\.jsx?$": "babel-jest"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Alfred021/Pokedex.git"
+  },
+  "author": "Alfredo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Alfred021/Pokedex/issues"
+  },
+  "homepage": "https://github.com/Alfred021/Pokedex#readme",
+  "dependencies": {
+    "bootstrap": "^4.4.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.9.6",
+    "@babel/preset-env": "^7.9.6",
+    "babel-jest": "^26.0.1",
+    "cypress": "^5.4.0",
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.1.0",
+    "eslint-plugin-import": "^2.20.2",
+    "jest": "^26.0.1",
+    "npm-run-all": "^4.1.5"
+  }
+}
